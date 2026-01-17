@@ -4,6 +4,7 @@ mod tests {
     use qubit_core::block::Block;
     use qubit_core::chain::Timechain;
     use qubit_core::genesis;
+    use qubit_core::main_helper::Wallet;
 
     #[test]
     fn test_transaction_creation() {
@@ -101,5 +102,55 @@ mod tests {
 
         let balance = wallet.get_balance(&chain);
         assert_eq!(balance, 0); // No rewards or transactions yet
+    }
+
+    #[test]
+    fn test_mining_simulation() {
+        let genesis = genesis::genesis();
+        let mut chain = Timechain::new(genesis.clone());
+
+        // Create a wallet for mining
+        let wallet = Wallet::load_or_create();
+
+        // Simulate mining a block
+        let parent_hash = chain.blocks.last().unwrap().hash();
+        let current_slot = chain.blocks.len() as u64;
+
+        // Use low difficulty for testing
+        chain.difficulty = 10;
+
+        let vdf_seed = vdf::evaluate(parent_hash, current_slot);
+        let vdf_proof = main_helper::compute_vdf(vdf_seed, chain.difficulty as u32);
+        let zk_pass = genesis::generate_zk_pass(&wallet, parent_hash);
+
+        // Try to find a valid nonce
+        let mut nonce = 0u64;
+        let mut found = false;
+
+        while !found && nonce < 10000 {
+            let block = Block {
+                parent: parent_hash,
+                slot: current_slot,
+                miner: wallet.address,
+                transactions: vec![],
+                vdf_proof,
+                zk_proof: zk_pass.clone(),
+                nonce,
+            };
+
+            if block.meets_difficulty(chain.difficulty) {
+                println!("Found valid nonce: {} for difficulty {}", nonce, chain.difficulty);
+                if chain.add_block(block.clone(), 3600).is_ok() {
+                    println!("Block added successfully!");
+                    found = true;
+                } else {
+                    println!("Block validation failed");
+                }
+            }
+            nonce += 1;
+        }
+
+        assert!(found, "Should find a valid nonce within 10000 attempts");
+        assert_eq!(chain.blocks.len(), 2, "Chain should have 2 blocks after mining");
     }
 }

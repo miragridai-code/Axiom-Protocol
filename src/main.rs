@@ -24,6 +24,8 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
 
     // 1. IDENTITY & STATE INITIALIZATION
     let wallet = Wallet::load_or_create();
+    println!("💳 Wallet Address: {:?}", hex::encode(wallet.address));
+    println!("📁 Wallet file: ./wallet.dat (keep safe!)");
     let ai_guardian = Arc::new(Mutex::new(NeuralGuardian::new()));
     let mut peer_message_counts: HashMap<PeerId, u32> = HashMap::new();
 

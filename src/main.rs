@@ -188,8 +188,14 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
                 SwarmEvent::Behaviour(network::TimechainBehaviourEvent::Mdns(ev)) => {
                     match ev {
                         libp2p::mdns::Event::Discovered(list) => {
-                            for (peer_id, _addr) in list {
+                            for (peer_id, addr) in list {
                                 println!("🔎 mDNS discovered peer: {}", peer_id);
+                                // Actually dial the discovered peer to establish connection
+                                if let Err(e) = swarm.dial(addr.clone()) {
+                                    println!("⚠️  Failed to dial peer {}: {:?}", peer_id, e);
+                                } else {
+                                    println!("📞 Dialing peer: {}", peer_id);
+                                }
                                 let _ = swarm.behaviour_mut().gossipsub.publish(req_topic.clone(), b"REQ_CHAIN".to_vec());
                             }
                         }

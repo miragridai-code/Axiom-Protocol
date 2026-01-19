@@ -1,9 +1,8 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 
-mod block; mod transaction; mod chain; mod network; mod storage; 
-mod main_helper; mod genesis; mod circuit; mod bridge; mod vdf; mod ai_engine;
-mod state; mod economics; mod wallet;
+
+use qubit_core::{block, transaction, chain, network, storage, main_helper, genesis, circuit, bridge, vdf, ai_engine, state, economics, wallet, zk};
 
 use block::Block;
 use chain::Timechain;

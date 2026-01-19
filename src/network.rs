@@ -1,3 +1,27 @@
+use std::collections::HashSet;
+
+/// External validator registry
+#[derive(Default)]
+pub struct ValidatorRegistry {
+    pub validators: HashSet<String>, // Peer IDs as strings
+}
+
+impl ValidatorRegistry {
+    pub fn register(&mut self, peer_id: &str) {
+        self.validators.insert(peer_id.to_string());
+    }
+
+    pub fn is_validator(&self, peer_id: &str) -> bool {
+        self.validators.contains(peer_id)
+    }
+}
+
+/// Add external peer to the network
+pub fn add_external_peer(swarm: &mut Swarm<TimechainBehaviour>, peer_addr: &str, peer_id: &str) {
+    if let Ok(addr) = peer_addr.parse() {
+        let _ = swarm.behaviour_mut().kademlia.add_address(&peer_id.parse().unwrap(), addr);
+    }
+}
 use libp2p::{gossipsub, mdns, kad, identify, swarm::{NetworkBehaviour, Swarm}};
 use std::error::Error;
 use libp2p::identity;

@@ -1,3 +1,6 @@
+#[patch.crates-io]
+ring = { version = "0.17.14" }
+tracing-subscriber = { version = "0.3.20" }
 [package]
 name = "qubit-core"
 version = "1.0.0"
@@ -7,6 +10,11 @@ publish = false # Ensures identity remains private and code isn't leaked to regi
 default-run = "qubit"
 
 [dependencies]
+dirs = "5.0"
+# AI/ML Framework
+tensorflow = "0.21"
+# Wesolowski VDF (Big Integer Support)
+rug = "1.20"
 # Networking (Hardened P2P)
 libp2p = { version = "0.53", features = ["macros", "gossipsub", "mdns", "kad", "identify", "tcp", "tokio", "noise", "yamux", "dns", "request-response"] }
 tokio = { version = "1.35", features = ["full"] }
@@ -36,6 +44,7 @@ ark-std = "0.5"
 
 # Storage
 sled = "0.34" # Embedded database for self-healing chain storage
+chrono = "0.4"
 
 [profile.release]
 opt-level = 3            # Maximum speed for VDF loops

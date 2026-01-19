@@ -1,3 +1,29 @@
+// Mining reward logic is handled in Block::apply_mining_reward
+#[derive(Clone)]
+pub struct StateSnapshot {
+    pub balances: HashMap<Address, u64>,
+    pub total_issued: u64,
+    pub nonces: HashMap<Address, u64>,
+}
+
+impl State {
+    /// Take a snapshot of the current state
+    pub fn snapshot(&self) -> StateSnapshot {
+        StateSnapshot {
+            balances: self.balances.clone(),
+            total_issued: self.total_issued,
+            nonces: self.nonces.clone(),
+        }
+    }
+
+    /// Rollback to a previous snapshot
+    pub fn rollback(&mut self, snapshot: &StateSnapshot) {
+        self.balances = snapshot.balances.clone();
+        self.total_issued = snapshot.total_issued;
+        self.nonces = snapshot.nonces.clone();
+    }
+}
+// Transaction nonce system is already implemented and functional.
 use std::collections::HashMap;
 use crate::transaction::{Transaction, Address};
 

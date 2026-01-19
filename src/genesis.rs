@@ -1,5 +1,4 @@
-#![allow(unused_imports)]
-#![allow(unused_variables)]
+use crate::zk;
 
 use crate::block::Block;
 use crate::main_helper::Wallet;
@@ -60,9 +59,11 @@ pub fn verify_transaction_proof(
     _transfer_amount: u64,
     _fee: u64,
 ) -> Result<bool, Box<dyn std::error::Error>> {
-    // Simplified verification - in production this would verify the ZK proof
-    // For now, just check proof length
-    Ok(proof_bytes.len() == 128)
+    // Real Groth16 verification
+    match zk::verify_transaction_proof(proof_bytes, _public_address, _transfer_amount, _fee) {
+        Ok(valid) => Ok(valid),
+        Err(e) => Err(e),
+    }
 }
 
 /// The immutable Genesis Block.

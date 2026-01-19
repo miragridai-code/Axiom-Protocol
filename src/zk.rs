@@ -1,14 +1,14 @@
-use ark_groth16::{Groth16, PreparedVerifyingKey, ProvingKey, VerifyingKey};
-use ark_snark::SNARK;
+use ark_groth16::{Groth16, ProvingKey, VerifyingKey};
 use ark_bls12_381::{Bls12_381, Fr};
-use ark_relations::r1cs::ConstraintSynthesizer;
-use ark_serialize::{CanonicalDeserialize, CanonicalSerialize};
+use crate::circuit::QubitTransactionCircuit;
+use ark_serialize::CanonicalDeserialize;
 use ark_ff::PrimeField;
+use ark_snark::SNARK;
+use ark_serialize::CanonicalSerialize;
 use sha2::{Sha256, Digest};
 use std::fs;
 use std::path::Path;
 use std::sync::OnceLock;
-use crate::circuit::QubitTransactionCircuit;
 
 // Global key storage - loaded once on first access
 static PROVING_KEY: OnceLock<ProvingKey<Bls12_381>> = OnceLock::new();

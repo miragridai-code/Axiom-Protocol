@@ -1,6 +1,3 @@
-#[patch.crates-io]
-ring = { version = "0.17.14" }
-tracing-subscriber = { version = "0.3.20" }
 [package]
 name = "qubit-core"
 version = "1.0.0"
@@ -10,9 +7,11 @@ publish = false # Ensures identity remains private and code isn't leaked to regi
 default-run = "qubit"
 
 [dependencies]
-dirs = "5.0"
+once_cell = "1.19"
 # AI/ML Framework
-tensorflow = "0.21"
+onnxruntime = "0.0.14"
+ndarray = "0.15"
+dirs = "5.0"
 # Wesolowski VDF (Big Integer Support)
 rug = "1.20"
 # Networking (Hardened P2P)

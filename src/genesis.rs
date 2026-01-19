@@ -2,15 +2,7 @@ use crate::zk;
 
 use crate::block::Block;
 use crate::main_helper::Wallet;
-use crate::circuit::QubitTransactionCircuit;
-use ark_groth16::{Groth16, prepare_verifying_key};
-use ark_snark::SNARK;
-use ark_bls12_381::{Bls12_381, Fr};
-use ark_relations::r1cs::ConstraintSynthesizer;
-use ark_serialize::CanonicalDeserialize;
-use rand::thread_rng;
 use sha2::{Sha256, Digest};
-use ark_ff::PrimeField;
 use std::sync::Once;
 
 /// The "Gatekeeper" function for the decentralized network.

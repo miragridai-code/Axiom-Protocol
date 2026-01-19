@@ -1,30 +1,39 @@
-use tensorflow::{Graph, Session, SessionOptions, Tensor};
+use onnxruntime::{environment::Environment, session::Session, tensor::OrtOwnedTensor, LoggingLevel};
+use once_cell::sync::Lazy;
 
 /// AI Attack Detection Model
+/// Static ONNX environment for all model sessions.
+/// Uses once_cell::sync::Lazy to ensure only one global environment is created.
+static ONNX_ENV: Lazy<Environment> = Lazy::new(|| {
+    Environment::builder()
+        .with_name("qubit-onnx-env")
+        .with_log_level(LoggingLevel::Warning)
+        .build()
+        .expect("Failed to initialize ONNX environment")
+});
+
 pub struct AttackDetectionModel {
-    session: Session,
-    graph: Graph,
+    session: Session<'static>,
 }
 
 impl AttackDetectionModel {
-    /// Load a TensorFlow model from file
-    pub fn load(model_path: &str) -> Result<Self, Box<dyn std::error::Error>> {
-        let mut graph = Graph::new();
-        let proto = std::fs::read(model_path)?;
-        graph.import_graph_def(&proto, &tensorflow::ImportGraphDefOptions::new())?;
-        let session = Session::new(&SessionOptions::new(), &graph)?;
-        Ok(Self { session, graph })
+    /// Load an ONNX model from file
+    /// Load an ONNX model from a static file path. The ONNX environment is static and shared.
+    /// The model_path must have a 'static lifetime (e.g., a global constant or string literal).
+    pub fn load(model_path: &'static str) -> Result<Self, Box<dyn std::error::Error + 'static>> {
+        let session = ONNX_ENV
+            .new_session_builder()?
+            .with_model_from_file(model_path)?;
+        Ok(Self { session })
     }
 
     /// Run inference on network metrics
-    pub fn predict(&self, features: &[f32]) -> Result<f32, Box<dyn std::error::Error>> {
-        let input = Tensor::new(&[1, features.len() as u64]).with_values(features)?;
-        let mut step = tensorflow::SessionRunArgs::new();
-        step.add_feed(&self.graph.operation_by_name_required("input")?, 0, &input);
-        let output_token = step.request_fetch(&self.graph.operation_by_name_required("output")?, 0);
-        self.session.run(&mut step)?;
-        let output: Tensor<f32> = step.fetch(output_token)?;
-        Ok(output[0])
+    pub fn predict(&mut self, features: &[f32]) -> Result<f32, Box<dyn std::error::Error>> {
+        // ONNX expects input as ndarray
+        let input_shape = vec![1, features.len()];
+        let input_array = ndarray::Array::from_shape_vec(input_shape.clone(), features.to_vec())?;
+        let outputs: Vec<OrtOwnedTensor<f32, _>> = self.session.run(vec![input_array])?;
+        Ok(outputs[0].as_slice().unwrap()[0])
     }
 }
 
@@ -35,7 +44,8 @@ pub fn collect_network_metrics() -> Vec<(Vec<f32>, f32)> {
 }
 
 /// Dynamic reputation scoring based on AI outputs
-pub fn calculate_peer_trust_score(model: &AttackDetectionModel, metrics: &[f32]) -> Result<f32, Box<dyn std::error::Error>> {
+pub fn calculate_peer_trust_score(model: &mut AttackDetectionModel, metrics: &[f32]) -> Result<f32, Box<dyn std::error::Error>> {
+    // Require &mut AttackDetectionModel for ONNX inference
     let score = model.predict(metrics)?;
     Ok(score)
 }

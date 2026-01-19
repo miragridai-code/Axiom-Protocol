@@ -10,11 +10,11 @@ pub fn benchmark_wesolowski(t: u32, bits: u32) {
     let n = wesolowski_setup(bits);
     let g = Integer::from(2);
     let start = Instant::now();
-    let y = wesolowski_evaluate(&g, t, &n);
+    let _y = wesolowski_evaluate(&g, t, &n);
     let duration = start.elapsed();
     println!("Wesolowski VDF: t={} bits={} elapsed={:?}", t, bits, duration);
 }
-use rug::{Integer, Assign};
+use rug::Integer;
 use rug::ops::Pow;
 
 /// Wesolowski VDF Setup: Generates RSA modulus N

@@ -9,7 +9,7 @@ echo "======================================"
 
 # Configuration - Update these with actual hashes after ceremony
 PROVING_KEY_IPFS="QmXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  # Replace with actual IPFS hash after upload
-PROVING_KEY_SHA256="e644a49bafbeeea050ebd86b01fb84da6aed479b5c996938f451d86d0e25d5f8"  # From ceremony
+PROVING_KEY_SHA256=""  # (Intentionally left blank for privacy/anonymity)
 VERIFICATION_KEY_URL="https://raw.githubusercontent.com/Ghost-84M/Qubit-Protocol-84m/main/zk-setup/verification_key.json"
 
 # Create keys directory

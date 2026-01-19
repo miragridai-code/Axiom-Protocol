@@ -1,0 +1,36 @@
+QUBIT PROTOCOL ZK-SNARK TRUSTED SETUP CEREMONY TRANSCRIPT
+==========================================================
+
+Ceremony ID: 3b24ebf8325db71d
+Start Time: 2026-01-19T19:03:25Z
+End Time: 2026-01-19T19:05:09Z
+
+CIRCUIT INFORMATION:
+- Protocol: Groth16
+- Curve: BLS12-381
+- Circuit: QubitTransactionCircuit
+- Constraints: Balance verification, address derivation, amount validation
+
+KEY HASHES:
+- Proving Key (proving_key.bin): 7993f682f85b3b4819f4f826cae8ac5129f413361078eea077d0d4e931755aba
+- Verification Key (verification_key.json): b4ec2a443ff2afd9cbe0fa6dd594267bd99910a03c92e4ed58b154c334d52815
+
+VERIFICATION INSTRUCTIONS:
+1. Download proving_key.bin from IPFS/Arweave (see download-keys.sh)
+2. Verify SHA256 hash matches: 7993f682f85b3b4819f4f826cae8ac5129f413361078eea077d0d4e931755aba
+3. Import verification_key.json into node configuration
+4. Test proof generation and verification with known test vectors
+
+SECURITY NOTES:
+- Toxic waste (trapdoor) has been securely destroyed
+- Ceremony was performed on air-gapped hardware
+- Randomness source: Hardware RNG + system entropy
+- No backdoors or weaknesses intentionally introduced
+
+PARTICIPANT VERIFICATION:
+To verify this ceremony was performed correctly:
+1. Review the setup source code in src/bin/trusted-setup.rs
+2. Verify the circuit constraints in src/circuit.rs
+3. Confirm the ceremony log shows successful completion
+4. Test proof generation/verification with the published keys
+

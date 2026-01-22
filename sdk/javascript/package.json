@@ -1,0 +1,33 @@
+{
+  "name": "qubit-sdk",
+  "version": "1.0.0",
+  "description": "JavaScript SDK for interacting with the Qubit blockchain",
+  "main": "qubit-sdk.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "qubit",
+    "blockchain",
+    "cryptocurrency",
+    "sdk",
+    "web3"
+  ],
+  "author": "Qubit Protocol Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ghost-84M/Qubit-Protocol-84m"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

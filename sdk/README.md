@@ -1,0 +1,271 @@
+# Qubit Protocol SDKs
+
+Official SDKs for interacting with the Qubit blockchain in multiple programming languages.
+
+## Available SDKs
+
+### Python SDK
+Located in `python/`
+
+**Installation:**
+```bash
+pip install qubit-sdk
+```
+
+**Quick Example:**
+```python
+from qubit_sdk import QubitClient, Wallet, qbt_to_sats
+
+client = QubitClient("http://localhost:8332")
+wallet = Wallet()
+tx_hash = client.send(wallet, recipient, qbt_to_sats(1.5), use_zk=True)
+```
+
+**Documentation:** [python/README.md](python/README.md)
+
+---
+
+### JavaScript/Node.js SDK
+Located in `javascript/`
+
+**Installation:**
+```bash
+npm install qubit-sdk
+```
+
+**Quick Example:**
+```javascript
+const { QubitClient, Wallet, qbtToSats } = require('qubit-sdk');
+
+const client = new QubitClient('http://localhost:8332');
+const wallet = new Wallet();
+const txHash = await client.send(wallet, recipient, qbtToSats(1.5), 1000, true);
+```
+
+**Documentation:** [javascript/README.md](javascript/README.md)
+
+---
+
+### Rust SDK
+Located in `rust/`
+
+**Installation:**
+```toml
+[dependencies]
+qubit-sdk = "1.0"
+```
+
+**Quick Example:**
+```rust
+use qubit_sdk::{QubitClient, Wallet, qbt_to_sats};
+
+let client = QubitClient::new("http://localhost:8332");
+let wallet = Wallet::new();
+let tx_hash = client.send(&wallet, recipient, qbt_to_sats(1.5), 1000, true)?;
+```
+
+**Documentation:** [rust/README.md](rust/README.md)
+
+---
+
+## Common Features
+
+All SDKs provide:
+
+1. **Wallet Management**
+   - Generate new wallets
+   - Load existing wallets from private keys
+   - Sign transactions and messages
+   - Verify signatures
+
+2. **Transaction Operations**
+   - Create transactions
+   - Sign transactions
+   - Broadcast transactions to the network
+   - Query transaction status
+
+3. **Blockchain Queries**
+   - Get account balances
+   - Retrieve blocks by hash or index
+   - Get transaction details
+   - Query chain info (height, supply, difficulty)
+
+4. **Advanced Features**
+   - ZK-SNARK proof generation for private transactions
+   - VDF proof verification
+   - Neural Guardian threat detection queries
+
+## RPC Endpoints
+
+All SDKs connect to a Qubit node via JSON-RPC. Default endpoint: `http://localhost:8332/rpc`
+
+### Available RPC Methods
+
+- `get_balance` - Get account balance
+- `get_nonce` - Get account nonce
+- `broadcast_transaction` - Submit transaction
+- `get_transaction` - Get transaction by hash
+- `get_block` - Get block by hash or index
+- `get_latest_block` - Get latest block
+- `get_chain_info` - Get blockchain statistics
+- `generate_zk_proof` - Generate ZK-SNARK proof
+- `verify_vdf` - Verify VDF proof
+- `neural_guardian_query` - Query threat detection
+
+## Examples
+
+### Transfer QBT
+
+**Python:**
+```python
+from qubit_sdk import QubitClient, Wallet, qbt_to_sats
+
+client = QubitClient("http://localhost:8332")
+wallet = Wallet("your_private_key_hex")
+
+# Send 10 QBT to recipient
+tx_hash = client.send(
+    wallet=wallet,
+    recipient="recipient_address_64_char_hex",
+    amount=qbt_to_sats(10.0),
+    fee=1000,
+    use_zk=False
+)
+print(f"Transaction sent: {tx_hash}")
+```
+
+**JavaScript:**
+```javascript
+const { QubitClient, Wallet, qbtToSats } = require('qubit-sdk');
+
+const client = new QubitClient('http://localhost:8332');
+const wallet = new Wallet('your_private_key_hex');
+
+// Send 10 QBT to recipient
+const txHash = await client.send(
+    wallet,
+    'recipient_address_64_char_hex',
+    qbtToSats(10.0),
+    1000,
+    false
+);
+console.log(`Transaction sent: ${txHash}`);
+```
+
+**Rust:**
+```rust
+use qubit_sdk::{QubitClient, Wallet, qbt_to_sats};
+
+let client = QubitClient::new("http://localhost:8332");
+let wallet = Wallet::from_private_key("your_private_key_hex".to_string());
+
+// Send 10 QBT to recipient
+let tx_hash = client.send(
+    &wallet,
+    "recipient_address_64_char_hex",
+    qbt_to_sats(10.0),
+    1000,
+    false
+)?;
+println!("Transaction sent: {}", tx_hash);
+```
+
+### Private Transaction with ZK-SNARK
+
+**Python:**
+```python
+# Private transaction using ZK-SNARK proof
+tx_hash = client.send(
+    wallet=wallet,
+    recipient=recipient_address,
+    amount=qbt_to_sats(5.0),
+    use_zk=True  # Enable privacy
+)
+```
+
+**JavaScript:**
+```javascript
+// Private transaction using ZK-SNARK proof
+const txHash = await client.send(
+    wallet,
+    recipientAddress,
+    qbtToSats(5.0),
+    1000,
+    true  // Enable privacy
+);
+```
+
+**Rust:**
+```rust
+// Private transaction using ZK-SNARK proof
+let tx_hash = client.send(
+    &wallet,
+    recipient_address,
+    qbt_to_sats(5.0),
+    1000,
+    true  // Enable privacy
+)?;
+```
+
+### Query Blockchain
+
+**Python:**
+```python
+# Get chain info
+info = client.get_chain_info()
+print(f"Height: {info['height']}")
+print(f"Supply: {info['total_supply']} satoshis")
+
+# Get latest block
+block = client.get_latest_block()
+print(f"Block #{block.index} with {len(block.transactions)} txs")
+
+# Get balance
+balance = client.get_balance(wallet.address)
+print(f"Balance: {balance / 100_000_000} QBT")
+```
+
+## Development
+
+### Building from Source
+
+**Python:**
+```bash
+cd sdk/python
+pip install -e .
+pytest tests/
+```
+
+**JavaScript:**
+```bash
+cd sdk/javascript
+npm install
+npm test
+```
+
+**Rust:**
+```bash
+cd sdk/rust
+cargo build --release
+cargo test
+```
+
+## Security Considerations
+
+1. **Private Key Management**: Never hardcode private keys. Use environment variables or secure key management systems.
+
+2. **HTTPS**: Always use HTTPS for production RPC endpoints to prevent man-in-the-middle attacks.
+
+3. **ZK-SNARKs**: Private transactions using ZK-SNARKs hide amounts and balances but not sender/recipient addresses.
+
+4. **Fee Estimation**: Set appropriate fees based on network conditions. Too low = slow confirmation.
+
+## Support
+
+- Documentation: [https://docs.qubit.network](https://docs.qubit.network)
+- GitHub Issues: [https://github.com/Ghost-84M/Qubit-Protocol-84m/issues](https://github.com/Ghost-84M/Qubit-Protocol-84m/issues)
+- Discord: [https://discord.gg/qubit](https://discord.gg/qubit)
+
+## License
+
+MIT License - see [LICENSE](../LICENSE) for details

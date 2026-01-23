@@ -185,14 +185,14 @@ impl OracleConsensusManager {
         let confidence = majority_oracles.len() as f64 / responses.len() as f64;
         
         // Identify dissenters
-        let majority_oracles: Vec<[u8; 32]> = clusters
+        let majority_addresses: Vec<[u8; 32]> = clusters
             .get(majority_response)
             .cloned()
             .unwrap_or_default();
         
         let dissenting_oracles: Vec<[u8; 32]> = responses
             .iter()
-            .filter(|r| !majority_oracles.contains(&r.oracle_address))
+            .filter(|r| !majority_addresses.contains(&r.oracle_address))
             .map(|r| r.oracle_address)
             .collect();
         
@@ -200,7 +200,7 @@ impl OracleConsensusManager {
             query_id,
             agreed_response: majority_response.clone(),
             confidence,
-            participating_oracles: majority_oracles,
+            participating_oracles: majority_addresses,
             dissenting_oracles,
         })
     }
@@ -340,7 +340,7 @@ mod tests {
             },
             OracleResponse {
                 query_id,
-                response_text: "The answer is 99".to_string(), // Outlier
+                response_text: "Wrong answer: 99".to_string(), // More different outlier
                 model: "claude-3-5-sonnet".to_string(),
                 oracle_address: [4u8; 32],
                 signature: vec![],

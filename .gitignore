@@ -1,2 +1,100 @@
+# Rust build artifacts
 /target
+/release-artifacts
 *.dat
+
+# Cargo.lock for libraries (keep for binaries)
+# Cargo.lock
+
+# Logs
+*.log
+node*.log
+broadcast_test.log
+build.log
+ceremony-logs/
+
+# Temporary and cache files
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+.vscode-test/
+
+# Database files
+*.db
+*.sqlite
+*.db-shm
+*.db-wal
+*.sled
+
+# Keys and sensitive data
+*.pem
+*.key
+*.priv
+private_keys/
+keys/
+
+# ZK ceremony artifacts (large files)
+proving_key.bin
+*.ptau
+
+# Dependency tracking
+postcard_dep.txt
+tracing-subscriber
+
+# Version artifacts
+=*
+
+# Docker volumes and data
+docker-data/
+node-data/
+
+# Test artifacts
+test-results/
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+
+# JavaScript/Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+Thumbs.db

@@ -1,8 +1,0 @@
-CEREMONY START: 3b24ebf8325db71d at 2026-01-19T19:03:25Z
-Protocol: Qubit Transaction Circuit (Groth16/BLS12-381)
-Circuit: QubitTransactionCircuit
-
-
-CEREMONY COMPLETE: 3b24ebf8325db71d at 2026-01-19T19:05:09Z
-Proving Key Hash: 7993f682f85b3b4819f4f826cae8ac5129f413361078eea077d0d4e931755aba
-Verification Key Hash: b4ec2a443ff2afd9cbe0fa6dd594267bd99910a03c92e4ed58b154c334d52815

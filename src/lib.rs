@@ -26,6 +26,36 @@ pub mod neural_guardian; // NEW: AI-powered security with federated learning
 pub use wallet::Wallet;
 pub use block::Block;
 
+// Re-export 124M economics constants
+pub use economics::{
+    TOTAL_SUPPLY,
+    INITIAL_REWARD,
+    HALVING_INTERVAL,
+    BLOCK_TIME_SECONDS,
+    ERA_DURATION_YEARS,
+    PROTOCOL_NAME,
+    TICKER,
+    CREATOR,
+    get_mining_reward,
+    calculate_total_supply,
+    remaining_supply,
+    supply_percentage,
+    current_era,
+    blocks_until_halving,
+    format_supply_stats,
+    validate_economics,
+    NetworkPhase,
+};
+
+// Re-export LWMA difficulty functions
+pub use consensus::{
+    calculate_lwma_difficulty,
+    TARGET_BLOCK_TIME,
+    LWMA_WINDOW,
+    estimate_hashrate,
+    format_hashrate,
+};
+
 // Re-export production types
 pub use error::{AxiomError, Result};
 pub use config::AxiomConfig;

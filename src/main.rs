@@ -37,7 +37,7 @@ fn validate_and_sync_chain(peer_blocks: &[Block], current_chain: &Timechain) -> 
 
     for (i, block) in peer_blocks.iter().enumerate().skip(1) {
         // Validate block structure and consensus rules
-        if candidate.add_block(block.clone(), 3600).is_err() {
+        if candidate.add_block(block.clone(), 1800).is_err() {
             println!("⚠️  Invalid block at height {} from peer - rejecting chain", i);
             valid = false;
             break;

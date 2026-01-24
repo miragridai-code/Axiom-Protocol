@@ -859,7 +859,7 @@ Bridge contracts undergo Certora formal verification:
 1. Bridge AXM to Ethereum as wAXM
 2. Provide liquidity on Uniswap (wAXM/ETH)
 3. Earn trading fees (0.3% per trade)
-4. Bridge profits back to AXIOM chain
+4. Bridge proceeds back to AXIOM chain
 ```
 
 **Benefits**:
@@ -870,7 +870,7 @@ Bridge contracts undergo Certora formal verification:
 
 ### 11.5 Institutional Treasury Management
 
-**Scenario**: Investment fund holds 100,000 AXM in cold storage.
+**Scenario**: Treasury holds 100,000 AXM in cold storage.
 
 **Solution**:
 ```
@@ -1040,4 +1040,4 @@ The future of finance is private, compliant, and sustainable. The future is AXIO
 
 ---
 
-*This whitepaper is for informational purposes only and does not constitute financial advice. Cryptocurrency investments carry significant risk. Always conduct your own research and consult with qualified financial advisors.*
+*This whitepaper is for informational purposes only and does not constitute financial advice. Cryptocurrency protocols carry inherent technical and market risks. Conduct thorough research and consult with qualified professionals before participating.*

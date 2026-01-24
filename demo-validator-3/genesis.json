@@ -1,0 +1,101 @@
+{
+  "config": {
+    "chainId": 84000,
+    "networkId": 1,
+    "consensus": "hybrid-pow-vdf-byzantine",
+    "byzantineThreshold": {
+      "total": 5,
+      "required": 3,
+      "type": "3-of-5-multisig"
+    },
+    "vdf": {
+      "steps": 3600000,
+      "timeProof": "1-hour",
+      "enforceStrictTiming": true
+    },
+    "pow": {
+      "algorithm": "SHA256d",
+      "initialDifficulty": 1000,
+      "adjustmentInterval": 2016,
+      "targetBlockTime": 3600
+    },
+    "economics": {
+      "totalSupply": "124000000",
+      "supplyUnit": "AXM",
+      "decimals": 8,
+      "initialBlockReward": "50.00000000",
+      "mobileReward": "1.00000000",
+      "halvingInterval": 2100000,
+      "minTransactionFee": "0.00000100"
+    }
+  },
+  "timestamp": "2026-01-24T10:34:50Z",
+  "nonce": "0x0000000000000000",
+  "difficulty": "0x3E8",
+  "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "number": "0x0",
+  "gasLimit": "0xF4240",
+  "alloc": {
+    "genesis": {
+      "balance": "0",
+      "code": "",
+      "storage": {}
+    }
+  },
+  "validators": [
+    {
+      "address": "axm1validatorfec8ab4f330e300609aa9e3b9e627b2f0aa5a921",
+      "stake": "100000.00000000",
+      "power": 1,
+      "index": 0
+    },
+    {
+      "address": "axm1validator823ab475c41297b18950d96f2ad244d166525b16",
+      "stake": "100000.00000000",
+      "power": 1,
+      "index": 1
+    },
+    {
+      "address": "axm1validator28468ce1f8ffd4a9dc566b8f37bb2ad7ba5d154c",
+      "stake": "100000.00000000",
+      "power": 1,
+      "index": 2
+    },
+    {
+      "address": "axm1validator2595de5cd7c01a2876c2d65f2c030baa744a8f78",
+      "stake": "100000.00000000",
+      "power": 1,
+      "index": 3
+    },
+    {
+      "address": "axm1validator85e5359fc5ade13f074307509e765208414d826c",
+      "stake": "100000.00000000",
+      "power": 1,
+      "index": 4
+    }
+  ],
+  "bootstrap": {
+    "nodes": [],
+    "initialPeers": 5,
+    "discoveryEnabled": true
+  },
+  "features": {
+    "privacy": {
+      "zkSnarksEnabled": true,
+      "mandatoryPrivacy": true,
+      "viewKeysEnabled": true
+    },
+    "sustainability": {
+      "energyTracking": true,
+      "carbonReporting": true,
+      "targetEnergyPerTx": "10J"
+    },
+    "mobile": {
+      "enabled": true,
+      "minIntensity": 1,
+      "maxIntensity": 100,
+      "rewardPerBlock": "1.00000000"
+    }
+  }
+}

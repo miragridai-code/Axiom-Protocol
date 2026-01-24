@@ -1,0 +1,45 @@
+Validator 1:
+  Name: axiom-validator-1
+  IP: 34.145.123.45
+  Region: us-east-1
+  User: ubuntu
+  RPC: http://34.145.123.45:8546
+  P2P: 34.145.123.45:6001
+  Address: axm1validatorfec8ab4f330e300609aa9e3b9e627b2f0aa5a921
+  
+Validator 2:
+  Name: axiom-validator-2
+  IP: 35.246.89.12
+  Region: europe-west1
+  User: ubuntu
+  RPC: http://35.246.89.12:8547
+  P2P: 35.246.89.12:6002
+  Address: axm1validator823ab475c41297b18950d96f2ad244d166525b16
+  
+Validator 3:
+  Name: axiom-validator-3
+  IP: 13.237.156.78
+  Region: ap-southeast-1
+  User: ubuntu
+  RPC: http://13.237.156.78:8548
+  P2P: 13.237.156.78:6003
+  Address: axm1validator28468ce1f8ffd4a9dc566b8f37bb2ad7ba5d154c
+  
+Validator 4:
+  Name: axiom-validator-4
+  IP: 52.67.234.89
+  Region: sa-east-1
+  User: ubuntu
+  RPC: http://52.67.234.89:8549
+  P2P: 52.67.234.89:6004
+  Address: axm1validator2595de5cd7c01a2876c2d65f2c030baa744a8f78
+  
+Validator 5:
+  Name: axiom-validator-5
+  IP: 45.79.88.234
+  Region: ap-south-1
+  User: ubuntu
+  RPC: http://45.79.88.234:8550
+  P2P: 45.79.88.234:6005
+  Address: axm1validator85e5359fc5ade13f074307509e765208414d826c
+  

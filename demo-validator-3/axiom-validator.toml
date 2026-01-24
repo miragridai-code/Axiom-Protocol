@@ -1,0 +1,36 @@
+[node]
+name = "axiom-validator-3"
+node_type = "archive"
+metrics_enabled = true
+
+[network]
+listen_address = "/ip4/0.0.0.0/tcp/6003"
+bootstrap_peers = []
+max_peers = 100
+network_id = 1
+
+[consensus]
+vdf_steps = 3600000
+pow_difficulty = 1000
+block_time_seconds = 3600
+
+[mining]
+enabled = true
+threads = 4
+miner_address = "axm1validator28468ce1f8ffd4a9dc566b8f37bb2ad7ba5d154c"
+intensity = 100
+min_peers_to_mine = 3
+
+[storage]
+data_dir = "./demo-validator-3/data"
+cache_size_mb = 2048
+pruning = "archive"
+
+[rpc]
+enabled = true
+listen_address = "127.0.0.1:8548"
+max_connections = 1000
+
+[logging]
+level = "info"
+log_file = "./demo-validator-3/validator.log"

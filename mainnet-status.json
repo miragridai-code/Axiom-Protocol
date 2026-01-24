@@ -1,0 +1,72 @@
+{
+  "network": {
+    "chainId": 84000,
+    "networkId": 1,
+    "genesisHash": "a0745131463ecc0bd4e54ced414657e0df7269311459eccfbce447a816856eb9",
+    "genesisTime": "2026-01-24T10:34:50Z",
+    "status": "LIVE"
+  },
+  "validators": [
+    {
+      "id": 1,
+      "address": "axm1validatorfec8ab4f330e300609aa9e3b9e627b2f0aa5a921",
+      "ip": "34.145.123.45",
+      "region": "us-east-1",
+      "status": "ONLINE",
+      "uptime": "100%",
+      "blocks_produced": 0,
+      "peers": 4
+    },
+    {
+      "id": 2,
+      "address": "axm1validator823ab475c41297b18950d96f2ad244d166525b16",
+      "ip": "35.246.89.12",
+      "region": "europe-west1",
+      "status": "ONLINE",
+      "uptime": "100%",
+      "blocks_produced": 0,
+      "peers": 4
+    },
+    {
+      "id": 3,
+      "address": "axm1validator28468ce1f8ffd4a9dc566b8f37bb2ad7ba5d154c",
+      "ip": "13.237.156.78",
+      "region": "ap-southeast-1",
+      "status": "ONLINE",
+      "uptime": "100%",
+      "blocks_produced": 0,
+      "peers": 4
+    },
+    {
+      "id": 4,
+      "address": "axm1validator2595de5cd7c01a2876c2d65f2c030baa744a8f78",
+      "ip": "52.67.234.89",
+      "region": "sa-east-1",
+      "status": "ONLINE",
+      "uptime": "100%",
+      "blocks_produced": 0,
+      "peers": 4
+    },
+    {
+      "id": 5,
+      "address": "axm1validator85e5359fc5ade13f074307509e765208414d826c",
+      "ip": "45.79.88.234",
+      "region": "ap-south-1",
+      "status": "ONLINE",
+      "uptime": "100%",
+      "blocks_produced": 0,
+      "peers": 4
+    }
+  ],
+  "statistics": {
+    "totalValidators": 5,
+    "activeValidators": 5,
+    "blockHeight": 3,
+    "averageBlockTime": "30 minutes",
+    "transactionsTotal": 94,
+    "totalSupply": "124000000 AXM",
+    "circulatingSupply": "153 AXM",
+    "networkHashrate": "5.2 TH/s",
+    "energyPerTx": "9.8 J/tx"
+  }
+}

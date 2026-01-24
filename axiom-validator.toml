@@ -1,0 +1,70 @@
+# AXIOM Protocol - Validator Configuration
+# Network: Mainnet (ID: 1)
+# Role: Archive validator with full history
+
+[node]
+name = "axiom-validator-1"
+node_type = "archive"
+metrics_enabled = true
+
+[network]
+listen_address = "/ip4/0.0.0.0/tcp/8545"
+bootstrap_peers = []
+max_peers = 100
+max_inbound_peers = 60
+max_outbound_peers = 40
+enable_mdns = true
+enable_kademlia = true
+connection_timeout = 30
+gossip_heartbeat = 1
+network_id = 1  # Mainnet
+
+[consensus]
+vdf_steps = 3600000
+pow_difficulty = 1000
+block_time_seconds = 3600
+difficulty_adjustment_interval = 2016
+max_block_size = 1000000
+max_transactions_per_block = 10000
+min_transaction_fee = 100000000
+confirmation_depth = 6
+
+[mining]
+enabled = true
+threads = 4
+miner_address = "axm1validator25e9a324d31e56a6f6ec4c953be0022d7c1b5499"
+intensity = 100
+min_peers_to_mine = 10
+
+[storage]
+data_dir = "./axiom-validator-data"
+cache_size_mb = 2048
+compression = true
+pruning = "archive"
+max_db_size_gb = 0  # Unlimited for validators
+
+[ai]
+neural_guardian_enabled = true
+threat_threshold = 0.7
+model_update_interval = 86400
+oracle_enabled = false
+min_oracle_stake = 50000000000
+oracle_consensus_threshold = 3
+
+[rpc]
+enabled = true
+listen_address = "0.0.0.0:8546"
+cors_allowed_origins = ["*"]
+max_connections = 1000
+request_timeout = 30
+websocket_enabled = true
+rate_limit = 200
+
+[logging]
+level = "info"
+file_enabled = true
+log_file = "axiom-validator-1.log"
+max_file_size_mb = 100
+max_backups = 10
+json_format = false
+colored = true

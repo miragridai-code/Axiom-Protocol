@@ -1,0 +1,20 @@
+# Prometheus scrape config for axiom-validator-1
+
+scrape_configs:
+  - job_name: 'axiom-validator-1'
+    static_configs:
+      - targets:
+        - 'localhost:9100'
+        labels:
+          validator: 'axiom-validator-1'
+          network: 'mainnet'
+          node_type: 'archive'
+          
+  - job_name: 'axiom-validator-1_rpc'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets:
+        - 'localhost:8546'
+        labels:
+          validator: 'axiom-validator-1'
+          endpoint_type: 'rpc'

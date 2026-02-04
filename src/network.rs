@@ -137,7 +137,7 @@ pub async fn init_network_with_bootstrap(bootstrap_peers: Vec<String>) -> Result
     let local_key = identity::Keypair::generate_ed25519();
     let peer_id = local_key.public().to_peer_id();
     
-    // Configure Yamux - keep alive handled by libp2p internally
+    // Configure Yamux with longer idle timeout to prevent disconnects
     let yamux_config = libp2p::yamux::Config::default();
     
     // Enforce encrypted channels (Noise protocol)
@@ -169,6 +169,9 @@ pub async fn init_network_with_bootstrap(bootstrap_peers: Vec<String>) -> Result
                 },
             })
         })?
+        .with_swarm_config(|cfg| {
+            cfg.with_idle_connection_timeout(std::time::Duration::from_secs(120))
+        })
         .build();
 
     // Add bootstrap peers to Kademlia with fallback and logging

@@ -151,43 +151,76 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
     let _ = swarm.behaviour_mut().gossipsub.subscribe(&tx_topic);
 
     // 3. BOOTSTRAP CONNECTIONS - Connect to mainnet bootnodes for global sync
-    println!("🌍 Connecting to mainnet bootstrap nodes...");
+    println!("🌍 Bootstrap Configuration:");
     let mut bootstrap_addrs = Vec::new();
     let mut bootstrap_connected = 0;
     
-    if let Ok(bootstrap_content) = std::fs::read_to_string("config/bootstrap.toml") {
+    // First, try environment variable for dynamic bootstrap peers
+    let env_bootstrap_peers: Vec<String> = std::env::var("AXIOM_BOOTSTRAP_PEERS")
+        .unwrap_or_default()
+        .split(',')
+        .filter(|s| !s.trim().is_empty())
+        .map(|s| s.trim().to_string())
+        .collect();
+    
+    if !env_bootstrap_peers.is_empty() {
+        println!("   📌 Using AXIOM_BOOTSTRAP_PEERS environment variable");
+        for addr_str in &env_bootstrap_peers {
+            if let Ok(addr) = addr_str.parse::<Multiaddr>() {
+                bootstrap_addrs.push((addr_str.clone(), addr.clone()));
+                match swarm.dial(addr.clone()) {
+                    Ok(_) => {
+                        println!("   ✅ Dialing bootstrap node: {}", addr_str);
+                        bootstrap_connected += 1;
+                        if let Some(peer_str) = addr_str.split("/p2p/").nth(1) {
+                            if let Ok(peer_id) = peer_str.parse::<libp2p::PeerId>() {
+                                swarm.behaviour_mut().kademlia.add_address(&peer_id, addr);
+                            }
+                        }
+                    },
+                    Err(e) => println!("   ⚠️  Failed to dial bootstrap node {}: {:?}", addr_str, e),
+                }
+            }
+        }
+    } else if let Ok(bootstrap_content) = std::fs::read_to_string("config/bootstrap.toml") {
+        // Fall back to config file
         if let Ok(bootstrap_config) = toml::from_str::<toml::Value>(&bootstrap_content) {
             if let Some(bootnodes) = bootstrap_config.get("bootnodes").and_then(|v| v.as_array()) {
-                for bootnode in bootnodes {
-                    if let Some(addr_str) = bootnode.as_str() {
-                        if let Ok(addr) = addr_str.parse::<Multiaddr>() {
-                            bootstrap_addrs.push((addr_str.to_string(), addr.clone()));
-                            match swarm.dial(addr.clone()) {
-                                Ok(_) => {
-                                    println!("✅ Dialing bootstrap node: {}", addr_str);
-                                    bootstrap_connected += 1;
-                                    // Extract peer ID if available and add to Kademlia
-                                    if let Some(peer_str) = addr_str.split("/p2p/").nth(1) {
-                                        if let Ok(peer_id) = peer_str.parse::<libp2p::PeerId>() {
-                                            swarm.behaviour_mut().kademlia.add_address(&peer_id, addr);
+                if !bootnodes.is_empty() {
+                    println!("   📌 Using config/bootstrap.toml addresses");
+                    for bootnode in bootnodes {
+                        if let Some(addr_str) = bootnode.as_str() {
+                            if let Ok(addr) = addr_str.parse::<Multiaddr>() {
+                                bootstrap_addrs.push((addr_str.to_string(), addr.clone()));
+                                match swarm.dial(addr.clone()) {
+                                    Ok(_) => {
+                                        println!("   ✅ Dialing bootstrap node: {}", addr_str);
+                                        bootstrap_connected += 1;
+                                        if let Some(peer_str) = addr_str.split("/p2p/").nth(1) {
+                                            if let Ok(peer_id) = peer_str.parse::<libp2p::PeerId>() {
+                                                swarm.behaviour_mut().kademlia.add_address(&peer_id, addr);
+                                            }
                                         }
-                                    }
-                                },
-                                Err(e) => println!("⚠️  Failed to dial bootstrap node {}: {:?}", addr_str, e),
+                                    },
+                                    Err(e) => println!("   ⚠️  Failed to dial bootstrap node {}: {:?}", addr_str, e),
+                                }
                             }
                         }
                     }
+                } else {
+                    println!("   📌 No bootstrap nodes configured (config/bootstrap.toml is empty)");
                 }
             }
         }
     } else {
-        println!("⚠️  Bootstrap config not found, starting with local discovery only");
+        println!("   📌 No bootstrap config found");
     }
     
     if bootstrap_connected == 0 {
-        println!("⚠️  No bootstrap nodes dialed, relying on mDNS discovery");
+        println!("   🌐 Using mDNS for local peer discovery only");
+        println!("   💡 For mainnet: Set AXIOM_BOOTSTRAP_PEERS env var or update config/bootstrap.toml");
     } else {
-        println!("✅ {} bootstrap nodes in queue for connection", bootstrap_connected);
+        println!("   ✅ {} bootstrap nodes queued for connection", bootstrap_connected);
     }
 
     // Ask the network for peers' chains so we can self-heal/sync on startup

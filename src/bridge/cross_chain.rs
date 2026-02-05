@@ -399,7 +399,7 @@ impl AxiomBridge {
     pub fn estimate_bridge_time(&self, from: &ChainId, _to: &ChainId) -> u64 {
         // Estimate in seconds
         match from {
-            ChainId::Axiom => 3600,      // 1 hour (VDF)
+            ChainId::Axiom => 1800,      // 30 minutes (VDF)
             ChainId::Ethereum => 180,     // 3 minutes
             ChainId::BSC => 45,           // 45 seconds
             ChainId::Polygon => 300,      // 5 minutes

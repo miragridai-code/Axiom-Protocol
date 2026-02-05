@@ -37,7 +37,7 @@ fn validate_and_sync_chain(peer_blocks: &[Block], current_chain: &Timechain) -> 
 
     for (i, block) in peer_blocks.iter().enumerate().skip(1) {
         // Validate block structure and consensus rules
-        if candidate.add_block(block.clone(), 3600).is_err() {
+        if candidate.add_block(block.clone(), 1800).is_err() {
             println!("⚠️  Invalid block at height {} from peer - rejecting chain", i);
             valid = false;
             break;
@@ -90,7 +90,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
 
     let mut tc = if let Some(saved_blocks) = storage::load_chain() {
         let mut chain = Timechain::new(genesis::genesis());
-        for b in saved_blocks { let _ = chain.add_block(b, 3600); }
+        for b in saved_blocks { let _ = chain.add_block(b, 1800); }
         chain
     } else {
         Timechain::new(genesis::genesis())
@@ -433,7 +433,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
                                     if !response.blocks.is_empty() {
                                         println!("📥 Received {} blocks via request-response from {}", response.blocks.len(), peer);
                                         for b in response.blocks {
-                                            let _ = tc.add_block(b, 3600);
+                                            let _ = tc.add_block(b, 1800);
                                         }
                                         storage::save_chain(&tc.blocks);
                                     }
@@ -501,7 +501,7 @@ async fn main() -> Result<(), Box<dyn Error + Send + Sync>> {
             // --- DASHBOARD: RESOLVING UNUSED WARNINGS ---
             _ = dashboard_timer.tick() => {
                 let elapsed = last_vdf.elapsed().as_secs();
-                let remaining = 3600u64.saturating_sub(elapsed);
+                let remaining = 1800u64.saturating_sub(elapsed);
                 // Using last_diff to calculate and show the difficulty trend
                 let trend = if tc.difficulty > last_diff { "UP ⬆️" } else if tc.difficulty < last_diff { "DOWN ⬇️" } else { "STABLE ↔️" };
                 // Supply info

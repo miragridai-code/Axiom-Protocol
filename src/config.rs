@@ -226,7 +226,7 @@ impl Default for ConsensusConfig {
         Self {
             vdf_steps: 3_600_000,
             pow_difficulty: 1000,
-            block_time_seconds: 3600,
+            block_time_seconds: 1800,
             difficulty_adjustment_interval: 2016,
             max_block_size: 1_000_000,
             max_transactions_per_block: 10_000,
@@ -360,7 +360,7 @@ impl AxiomConfig {
         config.node.node_type = NodeType::Archive;
         config.storage.pruning = PruningMode::Archive;
         config.consensus.vdf_steps = 3_600_000;
-        config.consensus.block_time_seconds = 3600;
+        config.consensus.block_time_seconds = 1800;
         config.consensus.pow_difficulty = 1000;
         config.storage.data_dir = PathBuf::from("./axiom-validator-data");
         config
@@ -373,7 +373,7 @@ impl AxiomConfig {
         config.node.node_type = NodeType::Light;
         config.network.max_peers = 20;
         config.consensus.vdf_steps = 3_600_000;
-        config.consensus.block_time_seconds = 3600;
+        config.consensus.block_time_seconds = 1800;
         config.consensus.pow_difficulty = 1000;
         config.mining.enabled = false;
         config.storage.data_dir = PathBuf::from("./axiom-light-data");

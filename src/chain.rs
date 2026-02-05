@@ -4,7 +4,7 @@ use crate::state::State;
 use crate::economics;
 use std::collections::HashSet;
 
-pub const TARGET_TIME: u64 = 3600; // 1 Hour Time-Lock
+pub const TARGET_TIME: u64 = 1800; // 30 Minute Time-Lock (VDF)
 pub const HALVING_INTERVAL: u64 = 2_100_000;
 pub const INITIAL_REWARD: u64 = 50_000_000_000; // 500 AXM (8 decimals)
 pub const MAX_SUPPLY: u64 = 124_000_000_000_000_000; // 124M AXM in smallest units

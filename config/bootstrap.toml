@@ -14,7 +14,7 @@
 # ========================================
 
 bootnodes = [
-    "/ip4/34.10.172.207/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU",  # Primary bootstrap node
+    "/ip4/34.10.172.20/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU",  # Primary bootstrap node - GCP instance
 ]
 
 # ========================================

@@ -7,10 +7,10 @@ This guide explains how to set up and run an Axiom Protocol bootstrap node on a 
 ## Current Bootstrap Node Information
 
 **Status:** ✅ Active  
-**Public IP:** `34.10.172.207`  
+**Public IP:** `34.10.172.20`  
 **Port:** `6000`  
 **PeerId:** `12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU`  
-**Multiaddr:** `/ip4/34.10.172.207/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU`
+**Multiaddr:** `/ip4/34.10.172.20/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU`
 
 ---
 
@@ -127,7 +127,7 @@ Expected output:
 ### Option 2: Use Environment Variable
 
 ```bash
-export AXIOM_BOOTSTRAP_PEERS="/ip4/34.10.172.207/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU"
+export AXIOM_BOOTSTRAP_PEERS="/ip4/34.10.172.20/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU"
 cargo run --release
 ```
 
@@ -196,7 +196,7 @@ sudo kill -9 <PID>
 sudo ufw status | grep 6000
 
 # Test connectivity from your machine
-telnet 34.10.172.207 6000
+telnet 34.10.172.20 6000
 
 # Check node logs
 sudo journalctl -u axiom-bootstrap --no-pager | tail -20
@@ -227,7 +227,7 @@ To add redundancy, update `config/bootstrap.toml`:
 
 ```toml
 bootnodes = [
-    "/ip4/34.10.172.207/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU",
+    "/ip4/34.10.172.20/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU",
     "/ip4/X.X.X.X/tcp/6000/p2p/12D3KooWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     "/ip4/Y.Y.Y.Y/tcp/6000/p2p/12D3KooWYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
 ]
@@ -288,7 +288,7 @@ tail $(find ~ -name "health_check.json" 2>/dev/null | head -1)
 
 For issues or questions:
 1. Check bootstrap node logs: `sudo journalctl -u axiom-bootstrap -f`
-2. Verify network connectivity: `ping 34.10.172.207`
+2. Verify network connectivity: `ping 34.10.172.20`
 3. Review this guide's troubleshooting section
 4. Open an issue on GitHub: https://github.com/Ghost-84M/Axiom-Protocol
 

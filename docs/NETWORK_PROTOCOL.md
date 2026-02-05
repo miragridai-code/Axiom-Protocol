@@ -1,25 +1,29 @@
-# AXIOM Protocol Network Protocol (Draft)
+# AXIOM Protocol Network - ARCHIVED
 
-## Peer Discovery
-- mDNS for local network
-- DHT and bootstrap node support for global peer discovery (production-grade)
+**DEPRECATED**: This document has been superseded by comprehensive, production-grade documentation.
 
-## Peer Management
-- Peer connection limits enforced (default: 32)
-- Basic peer banning mechanism (rate limiting, ban list)
-- No geographic diversity requirements
+## See Instead:
 
-## Message Formats
-- Basic block and transaction relay
-- No formal specification of message types
+### Primary Reference
+- **[NETWORK_CONSENSUS.md](NETWORK_CONSENSUS.md)** - Complete network architecture, consensus fixes, guardian sentinel
+- **[../TECHNICAL_SPEC.md](../TECHNICAL_SPEC.md)** - Full technical implementation details
+- **[../README.md](../README.md)** - Quick start and overview
 
-## Security
-- Peer authentication planned
-- Sybil/eclipse/DDOS protection groundwork added (rate limiting, ban logic)
+## What Changed
 
-## Synchronization
-- Sync protocol for new nodes via request-response and chain broadcast
-- No state snapshots or fast sync (planned)
+Old (Draft):  
+❌ Basic peer discovery  
+❌ Simple rate limiting  
+❌ Manual peer management  
 
----
-This document will be expanded as networking features are added. See network.rs for implementation details on connection limits, ban logic, and DHT/bootstrap support.
+New (Production):  
+✅ Bootstrap configuration with validation  
+✅ Network health metrics  
+✅ Sovereign Guardian sentinel (eternal monitoring)  
+✅ Automatic peer syncing across all nodes  
+✅ Multi-node consensus with fork prevention  
+✅ Full documentation of setup and recovery  
+
+## Archive Note
+
+This document is kept for historical reference only. All network features are now fully implemented and documented in NETWORK_CONSENSUS.md.

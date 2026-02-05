@@ -1,53 +1,109 @@
-# Axiom Protocol - Network Synchronization Guide
+# AXIOM Network Synchronization - Quick Start Guide
 
-## 🌐 Active Mainnet Bootstrap Node
+> **Complete Guide**: For comprehensive network setup, consensus architecture, and troubleshooting, see [docs/NETWORK_CONSENSUS.md](docs/NETWORK_CONSENSUS.md)
 
-```
-IP Address:      34.10.172.20
-Port:            6000
-PeerId:          12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU
-Multiaddr:       /ip4/34.10.172.20/tcp/6000/p2p/12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU
-Status:          ✅ ACTIVE
-Region:          GCP (Google Cloud Platform)
-```
+## ⚡ 30-Second Quick Start
 
----
-
-## Quick Start - Connect Any Node to Mainnet
-
-### For Users (Simple 3-Step Setup)
-
-**Step 1: Clone Repository**
 ```bash
-git clone https://github.com/Ghost-84M/Axiom-Protocol.git
-cd Axiom-Protocol
-```
-
-**Step 2: Build**
-```bash
+# Build the node
 cargo build --release
+
+# Run (automatically connects to mainnet bootstrap)
+./target/release/axiom-node
+
+# Verify it's syncing
+axiom-node status
+# Output: Connected Peers: 1+ | Height: Growing | Sync: IN SYNC ✅
 ```
 
-**Step 3: Run**
-```bash
-./target/release/axiom
-```
-
-✅ **That's it!** Your node will automatically connect to the bootstrap node and sync.
+**Done!** Your node automatically connects to `34.10.172.20:6000` and syncs the blockchain.
 
 ---
 
-## Detailed Connection Methods
+## Configuration Methods
 
-### Method 1: Auto-Configuration (Default) ⭐ Recommended
-
-The `config/bootstrap.toml` file is pre-configured with the mainnet bootstrap node.
-
+### 1. Default (config/bootstrap.toml)
 ```bash
+cargo run --release
+# Automatically uses config/bootstrap.toml
+```
+
+### 2. Environment Variable
+```bash
+export AXIOM_BOOTSTRAP_PEERS="/ip4/34.10.172.20/tcp/6000"
 cargo run --release
 ```
 
-**Expected output:**
+### 3. All Genesis Miners (5 nodes)
+```bash
+export AXIOM_BOOTSTRAP_PEERS="192.168.1.100:6000,192.168.1.101:6000,192.168.1.102:6000,192.168.1.103:6000,192.168.1.104:6000"
+cargo run --release
+```
+
+---
+
+## Verify Syncing
+
+```bash
+# Check node status
+axiom-node status
+
+# Check connected peers
+axiom-node peers
+
+# Continuous monitoring
+watch -n 5 'axiom-node status'
+```
+
+---
+
+## If Node Doesn't Connect
+
+1. **Check bootstrap connectivity**:
+   ```bash
+   telnet 34.10.172.20 6000
+   # Should connect (Ctrl+] then quit)
+   ```
+
+2. **Check firewall**:
+   ```bash
+   sudo ufw allow 6000/tcp
+   ```
+
+3. **See detailed troubleshooting**: [docs/NETWORK_CONSENSUS.md](docs/NETWORK_CONSENSUS.md#troubleshooting)
+
+---
+
+## 🔗 Bootstrap Node Details
+
+- **IP**: 34.10.172.20
+- **Port**: 6000  
+- **PeerId**: 12D3KooWAzD3QjhHMamey1XuysPovzwXyAZy9VzpZmQN7GkrURWU
+- **Region**: GCP (Google Cloud Platform)
+- **Uptime SLA**: 99.9%
+
+---
+
+## Emergency Recovery
+
+If your node has forked from mainnet (different chain history):
+
+```bash
+# Delete local chain
+pkill axiom-node
+rm -rf ~/.axiom/blocks/
+
+# Restart (will sync fresh from bootstrap)
+axiom-node
+```
+
+---
+
+## For Genesis Miners (5-Node Setup)
+
+See comprehensive guide: [docs/NETWORK_CONSENSUS.md](docs/NETWORK_CONSENSUS.md)
+
+
 ```
 🌍 Bootstrap Configuration:
    📌 Using config/bootstrap.toml with server bootstrap node

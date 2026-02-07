@@ -7,6 +7,7 @@ pub mod mempool;
 pub mod zk;
 pub mod consensus; // VDF consensus implementation
 pub mod ai; // AI Oracle network
+pub mod crypto; // Quantum-safe cryptography
 // Re-export modules and wallet so they can be used by bin crates
 pub mod transaction;
 pub mod main_helper;
